@@ -1,0 +1,43 @@
+// Phenotype library name
+phenotype "Syphilis_Related_Diagnoses" version "1";
+
+include ClarityCore version "1.0" called Clarity;
+
+
+termset syphilis_related_diagnoses_unstructured_terms: [
+   "AIDS","CAD","Chancroid","Chlamydia","coronary artery disease","Genital Warts","Gonorrhea","Granuloma Inguinale","Hepatitis","HepB","Herpes","HIV","Lymphogranuloma Venereum","Mucopurulent Cervicitis","Non-Gonoccal Urethritis","pelvic inflammatory disease","PID","venereal disease","vaginal discharge"
+];
+
+termset syphilis_behavorial_factors_unstructured_terms: [
+    "Cocaine","Crack","Heroin","Injection drug use","IV drug use","IVDU","Methamphetamine","Opioid"
+];
+
+
+define syphilis_related_diagnoses_unstructured:
+    Clarity.ProviderAssertion({
+		termset: [syphilis_related_diagnoses_unstructured_terms]
+	});
+
+define syphilis_behavorial_factors_unstructured:
+    Clarity.ProviderAssertion({
+		termset: [syphilis_behavorial_factors_unstructured_terms]
+	});
+
+
+define final syphilis_related_diagnoses:
+    Tuple {
+        "questionConcept": "2000000011",
+        "answerValue": syphilis_related_diagnoses_unstructured.term,
+        "answerType": "String",
+        "sourceNote": syphilis_related_diagnoses_unstructured.sentence
+    }
+where syphilis_related_diagnoses_unstructured;
+
+define final syphilis_behavorial_factors:
+    Tuple {
+        "questionConcept": "2000000022",
+        "answerValue": syphilis_behavorial_factors_unstructured.term,
+        "answerType": "String",
+        "sourceNote": syphilis_behavorial_factors_unstructured.sentence
+    }
+where syphilis_behavorial_factors_unstructured;

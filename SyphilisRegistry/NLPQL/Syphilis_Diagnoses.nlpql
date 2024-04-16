@@ -1,0 +1,25 @@
+// Phenotype library name
+phenotype "Syphilis_Diagnoses" version "1";
+
+include ClarityCore version "1.0" called Clarity;
+
+
+termset syphilis_diagnoses_unstructured_terms: [
+    "Syphilis","Syphilitic","ENPNS","Treponema pallidum","Pallidum","T. pallidum","Treponemal","Trep test"
+];
+
+
+define syphilis_diagnoses_unstructured:
+    Clarity.ProviderAssertion({
+		termset: [syphilis_diagnoses_unstructured_terms]
+	});
+
+
+define final syphilis_diagnoses:
+    Tuple {
+        "questionConcept": "2000000010",
+        "answerValue": syphilis_diagnoses_unstructured.term,
+        "answerType": "String",
+        "sourceNote": syphilis_diagnoses_unstructured.sentence
+    }
+where syphilis_diagnoses_unstructured;

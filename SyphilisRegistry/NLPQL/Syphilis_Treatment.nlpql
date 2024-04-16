@@ -1,0 +1,25 @@
+// Phenotype library name
+phenotype "Syphilis_Treatment" version "1";
+
+include ClarityCore version "1.0" called Clarity;
+
+
+termset syphilis_treatment_unstructured_terms: [
+    "Achromycin V","Actisite","Ala-Tet","Avidoxy","Azithromycin","BENEMID","Benzathine benzylpenicillin","benzathine penicillin","Benzylpenicillin","Bicillin","Brodspec","Ceftriaxone","Doryx","Doxy 100","Doxycycline","Lymecycline","Lymepak","Mondoxyne NL","Morgidox","Mysteclin","Okebo","Oracea","Panmycin","penicillin","Pfizerpen","Probenecid","procaine benzylpenicillin","Rocephin","Sumycin","TargaDOX","Tetracap","Tetracon","tetracycline","TOPICYCLINE","Vibramycin","Wycillin","Zithromax"
+];
+
+
+define syphilis_treatment_unstructured:
+    Clarity.ProviderAssertion({
+		termset: [syphilis_treatment_unstructured_terms]
+	});
+
+
+define final syphilis_treatment:
+    Tuple {
+        "questionConcept": "2000000013",
+        "answerValue": syphilis_treatment_unstructured.term,
+        "answerType": "String",
+        "sourceNote": syphilis_treatment_unstructured.sentence
+    }
+where syphilis_treatment_unstructured;
